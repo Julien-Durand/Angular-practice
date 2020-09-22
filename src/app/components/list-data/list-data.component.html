@@ -1,0 +1,65 @@
+<div class="container">
+  <h1 class="mt-5">All requests</h1>
+  <div class="container">
+    <div class="row">
+      <h2 class="col-1 m-auto pl-0">FILTERS</h2>
+
+      <!--  Form text -->
+      <div class="col-3">
+        <div class="mb-0">
+          <input type="text" class="form-control" aria-describedby="search-text" [(ngModel)]="searchText" >
+        </div>
+      </div>
+
+      <!-- Form select -->
+      <div class="col d-flex">
+        <div class="col-3 mb-0">
+          <select id="selectBrand" class="form-control" [(ngModel)]="selectText" >
+            <option value="" selected>- Brand -</option>
+            <option *ngFor="let b of brands" value="{{ b.name}}">{{ b.name }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <!-- First ligne   -->
+    <div class="row d-flex mb-2">
+      <div class="col-md-1">Status</div>
+      <div class="col-md-5 pl-4">Name</div>
+      <div class="col-md-1">Type</div>
+      <div class="col-md-2 pl-5">Brand</div>
+      <div class="col-md-3">Submission</div>
+    </div>
+    <!-- List campaigns   -->
+    <ul class="list-group" *ngFor="let c of campagnes | filter:searchText | filter:selectText; let i = index" >
+      <button (click)="onClickIdCampagne(c.requestId, i)" class="list-group-item row d-flex mb-3 rounded">
+        <div class="col-md-1 status-block">
+          <i [ngClass]="{'fas fa-hourglass-half': (c.requestStatus.requestStatusId !== 6  && c.requestStatus.requestStatusId !== 2),
+                         'fa fa-check-circle text-success': c.requestStatus.requestStatusId === 6,
+                          'far fa-times-circle text-danger': c.requestStatus.requestStatusId === 2}"></i>
+          <p>{{c.requestStatus.value}}</p>
+        </div>
+        <div class="col-md-5 align-self-center d-flex border-left">
+          <p class="mb-2 mt-2">{{c.campaignName}}</p>
+        </div>
+        <div *ngIf="c.advice; else notAdvice" class="advice-style col-md-1 align-self-center">
+          <span class="badge badge-danger">Advice</span>
+        </div>
+        <ng-template #notAdvice>
+          <div class="col-md-1 align-self-center">
+            <span class="badge badge-secondary">Request</span>
+          </div>
+        </ng-template>
+        <div class="col-md-2 align-self-center">
+          {{c.brand.name}}
+        </div>
+        <div class="col-md-2 align-self-center">
+          {{c.createdDate | date:'longDate'}}
+        </div>
+        <i class="fas fa-chevron-right col-md-1 align-self-center"></i>
+      </button>
+    </ul>
+  </div>
+</div>
