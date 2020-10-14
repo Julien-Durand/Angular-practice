@@ -1,6 +1,6 @@
-# Expertime
-Test technique réalisé en Angular et bootstap.
-Charge les données des fichiers Json en local storage.
+# Angular practice 
+With angular and bootstrap
+Json/Data/Local Storage/Update/research and sort
 
 #Installation
 
